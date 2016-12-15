@@ -6,7 +6,7 @@
 
 <div id="header_2">
   <% if current_user %>
-    <%= link_to "Go to Dashboard", products_dashboard_path %>
+    <%= link_to "Go to Dashboard", dashboard_path(current_user) %>
     <%= link_to "Logout", session_path(current_user), :method => :delete %>
   <% end %>
 </div>

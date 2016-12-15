@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
 
-  get 'products/dashboard'  => 'products#dashboard'
-
   resources :users
   resources :sessions
   resources :products
+  resources :dashboards
 
-  root 'sessions#new'
+
+  root 'products#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
