@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="login registration">
+        <title>Registration - Product Listing</title>
+    </head>
+    <body>
+      <h1> Welcome - Rails Belt Exam </h1>
+
+
+      <div id="login_container">
+          <h2>Registration</h2>
+          <form action='/users' method='POST' autocomplete="off">
+              <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+              <label for="user[name]">Name:</label><input type="text" name="user[name]" value="<%=flash[:name]%>"><br>
+              <label for="user[email]">Email:</label><input type="text" name="user[email]" value="<%=flash[:email]%>"><br>
+              <label for="user[password]">Password:</label><input type="password" name="user[password]"><br>
+              <label for="user[password_confirmation]">Confirm Password:</label><input type="password" name="user[password_confirmation]"><br>
+
+              <input type="submit" value="Register" class="buttons">
+          </form>
+
+          <% if flash[:errors] %>
+            <% if flash[:login_error] == "registration" %>
+              <% flash[:errors].each do |msg| %>
+                <p> <%= msg %></p>
+              <% end %>
+            <% end %>
+          <% end %>
+
+      </div>
+
+      <div id="login_container">
+
+          <h2>Login</h2>
+          <form action='/sessions' method='POST' autocomplete="new-password">
+              <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+              <label for="email">Email:</label><input type="search" name="email" value="<%=flash[:login_email]%>" autocomplete="new-password"><br>
+              <label for="password">Password:</label><input type="password" name="password" value = "" autocomplete="new-password"> <br>
+              <input type="submit" value="Login" class="buttons">
+          </form>
+
+          <% if flash[:errors] %>
+            <% if flash[:login_error] == "login" %>
+              <% flash[:errors].each do |msg| %>
+                <p> <%= msg %></p>
+              <% end %>
+            <% end %>
+          <% end %>
+      </div>
+
+    </body>
+</html>

@@ -1,0 +1,103 @@
+<div id="header_1">
+  <% if current_user %>
+    <p>Welcome, <%= current_user.name %> </p>
+  <% end %>
+</div>
+
+<div id="header_2">
+  <% if current_user %>
+    <%= link_to "Go to All Products", products_path %>
+    <%= link_to "Logout", session_path(current_user), :method => :delete %>
+  <% end %>
+</div>
+<br>
+<br>
+
+<h3>Sell Product</h3>
+<form action='/products' method='POST'>
+    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+    <label for="product[name]">Name:</label><input type="text" name="product[name]" value="<%=flash[:name]%>"><br>
+    <label for="product[amount]">Amount:</label><input type="number" name="product[amount]" min="0" step = ".01" value="<%=flash[:amount]%>"><br>
+    <input type="submit" value="Sell" class="buttons">
+</form>
+
+<% if flash[:errors] %>
+  <% flash[:errors].each do |msg| %>
+    <p> <%= msg %></p>
+  <% end %>
+<% end %>
+
+<h3>Products that are not yet sold</h3>
+
+<table>
+    <thead>
+        <th>Product</th>
+        <th>Date Posted</th>
+        <th>Amount</th>
+        <th>Action</th>
+    </thead>
+    <% @my_products.each do |product| %>
+    <tr>
+        <td><%= product.name%></td>
+        <td><%= product.created_at.strftime("%B %d, %Y")%></td>
+        <td>$<%= number_with_precision product.amount, :precision => 2 %></td>
+        <td><%= link_to "Remove", product_path(product.id), :method => :delete %></td>
+    </tr>
+    <% end %>
+</table>
+<br>
+<br>
+
+
+<h3>Sales</h3>
+<table>
+    <thead>
+        <th>Product</th>
+        <th>Date Bought</th>
+        <th>Buyer</th>
+        <th>Amount</th>
+    </thead>
+    <% @my_sold_products.each do |product| %>
+    <tr>
+        <td><%= product.name%></td>
+        <td><%= product.purchased_date.strftime("%B %d, %Y") %></td>
+        <td><%= product.purchased_by.name %></td>
+        <td>$<%= number_with_precision product.amount, :precision => 2 %></td>
+    </tr>
+    <% end %>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>Total:</td>
+      <td>$<%= number_with_precision @total_sold, :precision => 2 %></td>
+    </tr>
+</table>
+<br>
+<br>
+
+
+<h3>Purchases</h3>
+<table>
+    <thead>
+        <th>Product</th>
+        <th>Date Bought</th>
+        <th>Seller</th>
+        <th>Amount</th>
+    </thead>
+    <% @my_purchased_products.each do |product| %>
+    <tr>
+        <td><%= product.name%></td>
+        <td><%= product.purchased_date.strftime("%B %d, %Y") %></td>
+        <td><%= product.user.name %></td>
+        <td>$<%= number_with_precision product.amount, :precision => 2 %></td>
+    </tr>
+    <% end %>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>Total</td>
+      <td>$<%= number_with_precision @total_purchases, :precision => 2 %></td>
+    </tr>
+</table>
+<br>
+<br>

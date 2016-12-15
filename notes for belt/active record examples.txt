@@ -1,0 +1,5 @@
+Active Record Notes
+
+-Friends has a self join that you can reference. Location is:C:\codingdojo\rails\projects\models\friends
+-Belt Prep has a polymorphic relationship and several has_many and through options as well. C:\codingdojo\rails\projects\belt_prep
+
